@@ -43,7 +43,7 @@ public class ListActivity extends AppCompatActivity {
 
         songs = new ArrayList<Song>();
 
-        ContentResolver musicResolver = getContentResolver();
+        /*ContentResolver musicResolver = getContentResolver();
         Uri musicUri = android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         Cursor musicCursor = musicResolver.query(musicUri, null, null, null, null);
         if(musicCursor!=null && musicCursor.moveToFirst()){
@@ -51,7 +51,7 @@ public class ListActivity extends AppCompatActivity {
             int titleColumn = musicCursor.getColumnIndex
                     (android.provider.MediaStore.Audio.Media.TITLE);
             int idColumn = musicCursor.getColumnIndex
-                    (android.provider.MediaStore.Audio.Media._ID);
+                    (android.provider.MediaStore.Audio.Media.URI);
             int artistColumn = musicCursor.getColumnIndex
                     (android.provider.MediaStore.Audio.Media.ARTIST);
             //add songs to list
@@ -62,10 +62,10 @@ public class ListActivity extends AppCompatActivity {
                 songs.add(new Song(thisId, thisTitle, thisArtist));
             }
             while (musicCursor.moveToNext());
-        }
-        /*songs.add(new Song(R.raw.song1, "Are You What You Want To Be?", R.raw.artwork1, "Foster the People"));
+        }*/
+        songs.add(new Song(R.raw.song1, "Are You What You Want To Be?", R.raw.artwork1, "Foster the People"));
         songs.add(new Song(R.raw.song2, "Helena Beat", R.raw.artwork2, "Foster the People"));
-        songs.add(new Song(R.raw.song3, "Dreams", R.raw.artwork3, "Beck"));*/
+        songs.add(new Song(R.raw.song3, "Dreams", R.raw.artwork3, "Beck"));
 
 
         ArrayList<String> songTitles = new ArrayList<String>();
@@ -87,7 +87,7 @@ public class ListActivity extends AppCompatActivity {
                 {
                     soundPlayer.reset();
                 }
-                soundPlayer = MediaPlayer.create();
+                soundPlayer = MediaPlayer.create(getApplicationContext(), (int)songs.get(selectedRow).getID());
                 startActivity(newActivity);
             }
         });
@@ -143,16 +143,16 @@ public class ListActivity extends AppCompatActivity {
     }
 
     public static void changeSong(int i, Context c) {
-       // soundPlayer = MediaPlayer.create(c, (int)songs.get(i).getID());
-        Uri trackUri = ContentUris.withAppendedId(
+        soundPlayer = MediaPlayer.create(c, (int)songs.get(i).getID());
+        /*Uri trackUri = ContentUris.withAppendedId(
                 android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
                 songs.get(i).getID());
         try {
-            soundPlayer.setDataSource(c, trackUri);
+            soundPlayer.setda
         } catch (IOException e) {
             System.out.println("err");
 
-        }
+        }*/
     }
 }
 

@@ -11,11 +11,11 @@ public class Song {
     private long albumArtworkId;
     private String artist;
 
-    public Song(long i, String name,  String band)
+    public Song(long i, String name, long artwork,  String band)
     {
         id = i;
         title = name;
-        //albumArtworkId = artwork;
+        albumArtworkId = artwork;
         artist = band;
     }
 
