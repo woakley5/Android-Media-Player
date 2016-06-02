@@ -44,7 +44,6 @@ public class PlayerActivity extends AppCompatActivity{
     private TextView artistNameLabel;
     private SeekBar seekBar;
     private Timer updater;
-    //private MediaPlayer soundPlayer;
     private ArrayList<Song> songs;
     private int currentlyPlaying;
     private ImageView artworkView;
