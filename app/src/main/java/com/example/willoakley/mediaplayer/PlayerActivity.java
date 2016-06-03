@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -35,9 +36,9 @@ import java.util.logging.Handler;
 
 public class PlayerActivity extends AppCompatActivity{
 
-    private Button playButton;
-    private Button backButton;
-    private Button nextButton;
+    private ImageButton playButton;
+    private ImageButton backButton;
+    private ImageButton nextButton;
     private TextView timeElapsedLabel;
     private TextView timeTotalLabel;
     private TextView songTitleLabel;
@@ -56,16 +57,18 @@ public class PlayerActivity extends AppCompatActivity{
         songs = ListActivity.getSongList();
         currentlyPlaying = ListActivity.getClickedRow();
 
-        playButton = (Button)findViewById(R.id.playButton);
-        backButton = (Button)findViewById(R.id.backButton);
-        nextButton = (Button)findViewById(R.id.nextButton);
+        playButton = (ImageButton)findViewById(R.id.playButton);
+        backButton = (ImageButton)findViewById(R.id.backButton);
+        nextButton = (ImageButton)findViewById(R.id.nextButton);
         songTitleLabel = (TextView)findViewById(R.id.songTitleLabel);
         seekBar = (SeekBar)findViewById(R.id.seekBar);
         timeElapsedLabel = (TextView)findViewById(R.id.timeElapsedLabel);
         artworkView = (ImageView)findViewById(R.id.artworkView);
         artistNameLabel = (TextView)findViewById(R.id.artistLabel);
         timeTotalLabel = (TextView)findViewById(R.id.songLengthLabel);
-
+        playButton.setImageResource(+R.raw.play);
+        backButton.setImageResource(+R.raw.back);
+        nextButton.setImageResource(+R.raw.forward);
         //soundPlayer = ListActivity.getMediaPlayer();
         songTitleLabel.setText(songs.get(currentlyPlaying).getName());
         setTitle(songs.get(currentlyPlaying).getName());
@@ -180,9 +183,9 @@ public class PlayerActivity extends AppCompatActivity{
                 //int currentPosition = soundPlayer.getCurrentPosition();
                 int currentPosition = ListActivity.getPlayerCurrentPosition();
                 if (ListActivity.getIsPlaying()) {
-                    playButton.setText("Pause");
+                    playButton.setImageResource(+R.raw.pause);
                 } else {
-                    playButton.setText("Play");
+                    playButton.setImageResource(+R.raw.play);
                 }
                 seekBar.setProgress(currentPosition);
                 timeElapsedLabel.setText(String.format("%01d:%02d",

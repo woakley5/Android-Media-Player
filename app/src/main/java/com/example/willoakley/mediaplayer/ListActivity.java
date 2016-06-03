@@ -43,29 +43,9 @@ public class ListActivity extends AppCompatActivity {
 
         songs = new ArrayList<Song>();
 
-        /*ContentResolver musicResolver = getContentResolver();
-        Uri musicUri = android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        Cursor musicCursor = musicResolver.query(musicUri, null, null, null, null);
-        if(musicCursor!=null && musicCursor.moveToFirst()){
-            //get columns
-            int titleColumn = musicCursor.getColumnIndex
-                    (android.provider.MediaStore.Audio.Media.TITLE);
-            int idColumn = musicCursor.getColumnIndex
-                    (android.provider.MediaStore.Audio.Media.URI);
-            int artistColumn = musicCursor.getColumnIndex
-                    (android.provider.MediaStore.Audio.Media.ARTIST);
-            //add songs to list
-            do {
-                long thisId = musicCursor.getLong(idColumn);
-                String thisTitle = musicCursor.getString(titleColumn);
-                String thisArtist = musicCursor.getString(artistColumn);
-                songs.add(new Song(thisId, thisTitle, thisArtist));
-            }
-            while (musicCursor.moveToNext());
-        }*/
         songs.add(new Song(R.raw.song1, "Are You What You Want To Be?", R.raw.artwork1, "Foster the People"));
-        songs.add(new Song(R.raw.song2, "Helena Beat", R.raw.artwork2, "Foster the People"));
         songs.add(new Song(R.raw.song3, "Dreams", R.raw.artwork3, "Beck"));
+        songs.add(new Song(R.raw.song4, "Road Blaster", R.raw.artwork4, "M83"));
 
 
         ArrayList<String> songTitles = new ArrayList<String>();

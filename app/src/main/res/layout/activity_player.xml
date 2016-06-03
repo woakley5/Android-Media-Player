@@ -9,29 +9,37 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.willoakley.mediaplayer.PlayerActivity">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageButton
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:text="Back"
         android:id="@+id/backButton"
+        android:scaleType="fitXY"
+        android:background="@android:color/transparent"
+        android:layout_marginStart="33dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+        android:layout_toEndOf="@+id/timeElapsedLabel" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageButton
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:text="Next"
         android:id="@+id/nextButton"
-        android:layout_alignTop="@+id/backButton"
-        android:layout_alignParentEnd="true" />
+        android:scaleType="fitXY"
+        android:background="@android:color/transparent"
+        android:layout_marginEnd="33dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@+id/songLengthLabel" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageButton
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:text="Play"
         android:id="@+id/playButton"
-        android:layout_alignTop="@+id/backButton"
-        android:layout_centerHorizontal="true" />
+        android:scaleType="fitXY"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/transparent" />
 
     <SeekBar
         android:layout_width="wrap_content"
@@ -39,7 +47,7 @@
         android:id="@+id/seekBar"
         android:layout_above="@+id/backButton"
         android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/nextButton" />
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
