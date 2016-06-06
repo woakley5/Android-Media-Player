@@ -1,5 +1,6 @@
 package com.example.willoakley.mediaplayer;
 
+import android.graphics.Color;
 import android.media.Image;
 
 /**
@@ -32,6 +33,7 @@ public class Song {
     public long getAlbumArtwork() { return albumArtworkId; }
 
     public String getArtist() { return artist; }
+
 
 
 }

@@ -6,11 +6,14 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.DialogInterface;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.AudioManager;
 import android.media.Image;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -69,14 +72,16 @@ public class PlayerActivity extends AppCompatActivity{
         playButton.setImageResource(+R.raw.play);
         backButton.setImageResource(+R.raw.back);
         nextButton.setImageResource(+R.raw.forward);
-        //soundPlayer = ListActivity.getMediaPlayer();
         songTitleLabel.setText(songs.get(currentlyPlaying).getName());
         setTitle(songs.get(currentlyPlaying).getName());
         artistNameLabel.setText(songs.get(currentlyPlaying).getArtist());
         artworkView.setImageResource((int)songs.get(currentlyPlaying).getAlbumArtwork());
-        //seekBar.setMax(soundPlayer.getDuration());
         seekBar.setMax(ListActivity.getPlayerDuration());
-
+        ActionBar bar = getSupportActionBar();
+        int color = Color.rgb((int) (Math.random() * 256), (int) (Math.random() * 256), (int) (Math.random() * 256));
+        ColorDrawable colorDrawable = new  ColorDrawable(color);
+        bar.setBackgroundDrawable(colorDrawable);
+        getWindow().setStatusBarColor(color);
         //soundPlayer.start();
         ListActivity.startPlayer();
 
@@ -216,6 +221,11 @@ public class PlayerActivity extends AppCompatActivity{
         //seekBar.setMax(soundPlayer.getDuration());
         seekBar.setMax(ListActivity.getPlayerDuration());
         //soundPlayer.start();
+        ActionBar bar = getSupportActionBar();
+        int color = Color.rgb((int) (Math.random() * 256), (int) (Math.random() * 256), (int) (Math.random() * 256));
+        ColorDrawable colorDrawable = new  ColorDrawable(color);
+        bar.setBackgroundDrawable(colorDrawable);
+        getWindow().setStatusBarColor(color);
         ListActivity.startPlayer();
     }
 
@@ -237,6 +247,11 @@ public class PlayerActivity extends AppCompatActivity{
         //seekBar.setMax(soundPlayer.getDuration());
         seekBar.setMax(ListActivity.getPlayerDuration());
         //soundPlayer.start();
+        ActionBar bar = getSupportActionBar();
+        int color = Color.rgb((int) (Math.random() * 256), (int) (Math.random() * 256), (int) (Math.random() * 256));
+        ColorDrawable colorDrawable = new  ColorDrawable(color);
+        bar.setBackgroundDrawable(colorDrawable);
+        getWindow().setStatusBarColor(color);
         ListActivity.startPlayer();
     }
 

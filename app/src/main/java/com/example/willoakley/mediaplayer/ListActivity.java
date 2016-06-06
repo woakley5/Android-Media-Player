@@ -6,6 +6,7 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -46,12 +47,15 @@ public class ListActivity extends AppCompatActivity {
         songs.add(new Song(R.raw.song1, "Are You What You Want To Be?", R.raw.artwork1, "Foster the People"));
         songs.add(new Song(R.raw.song3, "Dreams", R.raw.artwork3, "Beck"));
         songs.add(new Song(R.raw.song4, "Road Blaster", R.raw.artwork4, "M83"));
+        songs.add(new Song(R.raw.song5, "Tearing Me Up", R.raw.artwork5, "Bob Moses"));
+        songs.add(new Song(R.raw.song6, "Gold", R.raw.artwork6, "Chet Faker"));
+
 
 
         ArrayList<String> songTitles = new ArrayList<String>();
 
         for (Song s : songs) {
-            songTitles.add(s.getName());
+            songTitles.add(s.getName() + "   -   " + s.getArtist());
         }
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, songTitles);
@@ -124,15 +128,7 @@ public class ListActivity extends AppCompatActivity {
 
     public static void changeSong(int i, Context c) {
         soundPlayer = MediaPlayer.create(c, (int)songs.get(i).getID());
-        /*Uri trackUri = ContentUris.withAppendedId(
-                android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                songs.get(i).getID());
-        try {
-            soundPlayer.setda
-        } catch (IOException e) {
-            System.out.println("err");
 
-        }*/
     }
 }
 
