@@ -97,15 +97,7 @@ public class PlayerActivity extends AppCompatActivity{
         }
 
         seekBar.setProgress(0);
-        updater = new Timer();
-
-        updater.schedule(new TimerTask() { //timer to update seekbar
-            @Override
-            public void run() {
-                updateSeekBar();
-            }
-
-        }, 0, 50);
+        setUpdater();
 
         playButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -155,12 +147,13 @@ public class PlayerActivity extends AppCompatActivity{
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
+                updater.cancel();
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 ListActivity.playerSeekTo(seekBar.getProgress());
-
+                setUpdater();
             }
 
         });
@@ -209,6 +202,20 @@ public class PlayerActivity extends AppCompatActivity{
             }
         });
     }
+
+    public void setUpdater()
+    {
+        updater = new Timer();
+
+        updater.schedule(new TimerTask() { //timer to update seekbar
+            @Override
+            public void run() {
+                updateSeekBar();
+            }
+
+        }, 0, 50);
+    }
+
 
     public void nextSong()
     {
