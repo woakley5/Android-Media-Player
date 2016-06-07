@@ -171,7 +171,6 @@ public class PlayerActivity extends AppCompatActivity{
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
 
             updater.cancel();
-
             finish();
         }
         return super.onKeyDown(keyCode, event);

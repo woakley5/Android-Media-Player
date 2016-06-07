@@ -85,10 +85,6 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selectedRow = position;
-                if(soundPlayer != null)
-                {
-                    soundPlayer.reset();
-                }
                 soundPlayer = MediaPlayer.create(getApplicationContext(), (int)songs.get(selectedRow).getID());
                 startActivity(newActivity);
             }
