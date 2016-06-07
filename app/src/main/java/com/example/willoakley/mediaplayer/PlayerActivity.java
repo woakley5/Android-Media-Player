@@ -45,7 +45,6 @@ public class PlayerActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
-
         songs = ListActivity.getSongList();
         currentlyPlaying = ListActivity.getClickedRow();
         mVisualizerView = (VisualizerView) findViewById(R.id.myVisualizerView);
@@ -86,6 +85,7 @@ public class PlayerActivity extends AppCompatActivity{
                 mVisualizer.setEnabled(false);
             }
         });
+
         ListActivity.startPlayer();
 
         if(currentlyPlaying == songs.size() -1)
@@ -95,6 +95,7 @@ public class PlayerActivity extends AppCompatActivity{
         else{
             nextButton.setEnabled(true);
         }
+
         seekBar.setProgress(0);
         updater = new Timer();
 
@@ -181,8 +182,6 @@ public class PlayerActivity extends AppCompatActivity{
         super.onPause();
         if (isFinishing() && ListActivity.getMediaPlayer() != null) {
             mVisualizer.release();
-            ListActivity.getMediaPlayer().release();
-            //ListActivity.getMediaPlayer() = null;
         }
     }
 
@@ -241,7 +240,6 @@ public class PlayerActivity extends AppCompatActivity{
         setupVisualizerFxAndUI();
         mVisualizerView.changeColor(darkerColor);
         mVisualizer.setEnabled(true);
-
         ListActivity.getMediaPlayer().setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             public void onCompletion(MediaPlayer mediaPlayer) {
                 mVisualizer.setEnabled(false);
@@ -280,7 +278,6 @@ public class PlayerActivity extends AppCompatActivity{
         setupVisualizerFxAndUI();
         mVisualizerView.changeColor(darkerColor);
         mVisualizer.setEnabled(true);
-
         ListActivity.getMediaPlayer().setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             public void onCompletion(MediaPlayer mediaPlayer) {
                 mVisualizer.setEnabled(false);
@@ -290,8 +287,6 @@ public class PlayerActivity extends AppCompatActivity{
     }
 
     private void setupVisualizerFxAndUI() {
-
-        // Create the Visualizer object and attach it to our media player.
         mVisualizer = new Visualizer(ListActivity.getMediaPlayer().getAudioSessionId());
         mVisualizer.setCaptureSize(Visualizer.getCaptureSizeRange()[1]);
         mVisualizer.setDataCaptureListener(

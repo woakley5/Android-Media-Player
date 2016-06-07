@@ -85,6 +85,7 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selectedRow = position;
+                resetPlayer();
                 soundPlayer = MediaPlayer.create(getApplicationContext(), (int)songs.get(selectedRow).getID());
                 startActivity(newActivity);
             }
@@ -105,8 +106,7 @@ public class ListActivity extends AppCompatActivity {
         return soundPlayer.getDuration();
     }
 
-    public static void startPlayer()
-    {
+    public static void startPlayer() {
         soundPlayer.start();
     }
 
@@ -117,7 +117,12 @@ public class ListActivity extends AppCompatActivity {
 
     public static void resetPlayer()
     {
-        soundPlayer.reset();
+        if(soundPlayer != null)
+        {
+            soundPlayer.reset();
+            System.out.println("Resetting Player");
+        }
+
     }
 
     public static boolean getIsPlaying()
