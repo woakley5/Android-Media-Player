@@ -79,10 +79,13 @@ public class PlayerActivity extends AppCompatActivity{
         seekBar.setMax(ListActivity.getPlayerDuration());
         ActionBar bar = getSupportActionBar();
         int color = Color.rgb((int) (Math.random() * 256), (int) (Math.random() * 256), (int) (Math.random() * 256));
+        float[] hsv = new float[3];
+        Color.colorToHSV(color, hsv);
+        hsv[2] *= 0.8f;
+        int darkerColor = Color.HSVToColor(hsv);
         ColorDrawable colorDrawable = new  ColorDrawable(color);
         bar.setBackgroundDrawable(colorDrawable);
-        getWindow().setStatusBarColor(color);
-        //soundPlayer.start();
+        getWindow().setStatusBarColor(darkerColor);
         ListActivity.startPlayer();
 
 
@@ -107,10 +110,8 @@ public class PlayerActivity extends AppCompatActivity{
         playButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (!ListActivity.getIsPlaying()) {
-                    //soundPlayer.start();
                     ListActivity.startPlayer();
                 } else {
-                    //soundPlayer.pause();
                     ListActivity.pausePlayer();
                 }
 
@@ -122,7 +123,6 @@ public class PlayerActivity extends AppCompatActivity{
                 if(ListActivity.getPlayerCurrentPosition() < 5000) {
                     if(currentlyPlaying == 0)
                     {
-                        //soundPlayer.seekTo(0);
                         ListActivity.playerSeekTo(0);
                     }
                     else {
@@ -134,11 +134,10 @@ public class PlayerActivity extends AppCompatActivity{
                 else
                 {
                     System.out.println("Moving to beginning of song");
-                    //soundPlayer.seekTo(0);
                     ListActivity.playerSeekTo(0);
                 }
             }
-        }); //back button resets song
+        });
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -160,7 +159,6 @@ public class PlayerActivity extends AppCompatActivity{
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-               // soundPlayer.seekTo(seekBar.getProgress());
                 ListActivity.playerSeekTo(seekBar.getProgress());
 
             }
@@ -174,7 +172,6 @@ public class PlayerActivity extends AppCompatActivity{
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
 
             updater.cancel();
-            //soundPlayer.reset();
             System.out.println("Ending Activity");
             finish();
         }
@@ -185,8 +182,12 @@ public class PlayerActivity extends AppCompatActivity{
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                //int currentPosition = soundPlayer.getCurrentPosition();
                 int currentPosition = ListActivity.getPlayerCurrentPosition();
+                if(currentPosition >= ListActivity.getPlayerDuration() - 100)
+                {
+                    nextSong();
+                    System.out.println("Next Song Running");
+                }
                 if (ListActivity.getIsPlaying()) {
                     playButton.setImageResource(+R.raw.pause);
                 } else {
@@ -209,23 +210,24 @@ public class PlayerActivity extends AppCompatActivity{
         if(currentlyPlaying == songs.size() -1)
         {
             nextButton.setEnabled(false);
+            nextButton.setVisibility(View.INVISIBLE);
         }
-        //soundPlayer.reset();
         ListActivity.resetPlayer();
-        //soundPlayer = MediaPlayer.create(this, songs.get(currentlyPlaying).getID());
         ListActivity.changeSong(currentlyPlaying, this);
         songTitleLabel.setText(songs.get(currentlyPlaying).getName());
         setTitle(songs.get(currentlyPlaying).getName());
         artistNameLabel.setText(songs.get(currentlyPlaying).getArtist());
         artworkView.setImageResource((int)songs.get(currentlyPlaying).getAlbumArtwork());
-        //seekBar.setMax(soundPlayer.getDuration());
         seekBar.setMax(ListActivity.getPlayerDuration());
-        //soundPlayer.start();
         ActionBar bar = getSupportActionBar();
         int color = Color.rgb((int) (Math.random() * 256), (int) (Math.random() * 256), (int) (Math.random() * 256));
+        float[] hsv = new float[3];
+        Color.colorToHSV(color, hsv);
+        hsv[2] *= 0.8f;
+        int darkerColor = Color.HSVToColor(hsv);
         ColorDrawable colorDrawable = new  ColorDrawable(color);
         bar.setBackgroundDrawable(colorDrawable);
-        getWindow().setStatusBarColor(color);
+        getWindow().setStatusBarColor(darkerColor);
         ListActivity.startPlayer();
     }
 
@@ -235,23 +237,24 @@ public class PlayerActivity extends AppCompatActivity{
         if(currentlyPlaying != songs.size() -1)
         {
             nextButton.setEnabled(true);
+            nextButton.setVisibility(View.VISIBLE);
         }
-        //soundPlayer.reset();
         ListActivity.resetPlayer();
-        //soundPlayer = MediaPlayer.create(this, songs.get(currentlyPlaying).getID());
         ListActivity.changeSong(currentlyPlaying, this);
         songTitleLabel.setText(songs.get(currentlyPlaying).getName());
         setTitle(songs.get(currentlyPlaying).getName());
         artistNameLabel.setText(songs.get(currentlyPlaying).getArtist());
         artworkView.setImageResource((int)songs.get(currentlyPlaying).getAlbumArtwork());
-        //seekBar.setMax(soundPlayer.getDuration());
         seekBar.setMax(ListActivity.getPlayerDuration());
-        //soundPlayer.start();
         ActionBar bar = getSupportActionBar();
         int color = Color.rgb((int) (Math.random() * 256), (int) (Math.random() * 256), (int) (Math.random() * 256));
+        float[] hsv = new float[3];
+        Color.colorToHSV(color, hsv);
+        hsv[2] *= 0.8f;
+        int darkerColor = Color.HSVToColor(hsv);
         ColorDrawable colorDrawable = new  ColorDrawable(color);
         bar.setBackgroundDrawable(colorDrawable);
-        getWindow().setStatusBarColor(color);
+        getWindow().setStatusBarColor(darkerColor);
         ListActivity.startPlayer();
     }
 

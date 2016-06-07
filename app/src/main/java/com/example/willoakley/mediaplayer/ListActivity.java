@@ -17,12 +17,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by WillOakley on 5/24/16.
@@ -44,22 +48,36 @@ public class ListActivity extends AppCompatActivity {
 
         songs = new ArrayList<Song>();
 
-        songs.add(new Song(R.raw.song1, "Are You What You Want To Be?", R.raw.artwork1, "Foster the People"));
-        songs.add(new Song(R.raw.song3, "Dreams", R.raw.artwork3, "Beck"));
-        songs.add(new Song(R.raw.song4, "Road Blaster", R.raw.artwork4, "M83"));
-        songs.add(new Song(R.raw.song5, "Tearing Me Up", R.raw.artwork5, "Bob Moses"));
-        songs.add(new Song(R.raw.song6, "Gold", R.raw.artwork6, "Chet Faker"));
+
+        songs.add(0, new Song(R.raw.song3, "Dreams", R.raw.artwork3, "Beck"));
+        songs.add(1, new Song(R.raw.song5, "Tearing Me Up", R.raw.artwork5, "Bob Moses"));
+        songs.add(2, new Song(R.raw.song6, "Gold", R.raw.artwork6, "Chet Faker"));
+        songs.add(3, new Song(R.raw.song14, "Starman", R.raw.artwork14, "David Bowie"));
+        songs.add(4, new Song(R.raw.song7, "Latch", R.raw.artwork7, "Disclosure"));
+        songs.add(5, new Song(R.raw.song13, "MoneyGrabber", R.raw.artwork13, "Fitz and the Tantrums"));
+        songs.add(6, new Song(R.raw.song1, "Are You What You Want To Be?", R.raw.artwork1, "Foster the People"));
+        songs.add(7, new Song(R.raw.song12, "All Along the Watch Tower", R.raw.artwork12, "Jimi Hendrix"));
+        songs.add(8, new Song(R.raw.song11, "Hey Joe", R.raw.artwork11, "Jimi Hendrix"));
+        songs.add(9, new Song(R.raw.song16, "When the Levee Breaks", R.raw.artwork16, "Led Zeppelin"));
+        songs.add(10, new Song(R.raw.song4, "Road Blaster", R.raw.artwork4, "M83"));
+        songs.add(11, new Song(R.raw.song15, "Another Brick in the Wall Pt. 2", R.raw.artwork15, "Pink Floyd"));
+        songs.add(12, new Song(R.raw.song17, "Under Pressure", R.raw.artwork17, "Queen"));
+        songs.add(13, new Song(R.raw.song10, "Sympathy for the Devil", R.raw.artwork10, "The Rolling Stones"));
 
 
-
-        ArrayList<String> songTitles = new ArrayList<String>();
-
-        for (Song s : songs) {
-            songTitles.add(s.getName() + "   -   " + s.getArtist());
+        List<Map<String, String>> data = new ArrayList<Map<String, String>>();
+        for (Song item : songs) {
+            Map<String, String> datum = new HashMap<String, String>(2);
+            datum.put("title", item.getName());
+            datum.put("artist", item.getArtist());
+            data.add(datum);
         }
-
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, songTitles);
-        songListView.setAdapter(arrayAdapter);
+        SimpleAdapter adapter = new SimpleAdapter(this, data,
+                android.R.layout.simple_list_item_2,
+                new String[] {"title", "artist"},
+                new int[] {android.R.id.text1,
+                        android.R.id.text2});
+        songListView.setAdapter(adapter);
 
         final Intent newActivity = new Intent(this, PlayerActivity.class);
 
@@ -85,11 +103,6 @@ public class ListActivity extends AppCompatActivity {
     }
 
     public static int getClickedRow() {return selectedRow;}
-
-    public static MediaPlayer getMediaPlayer()
-    {
-        return soundPlayer;
-    }
 
     public static int getPlayerDuration()
     {
