@@ -7,6 +7,8 @@ import android.content.ContentUris;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.media.AudioManager;
 import android.media.Image;
@@ -85,6 +87,8 @@ public class PlayerActivity extends AppCompatActivity{
         int darkerColor = Color.HSVToColor(hsv);
         ColorDrawable colorDrawable = new  ColorDrawable(color);
         bar.setBackgroundDrawable(colorDrawable);
+        seekBar.getProgressDrawable().setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY));
+        seekBar.getThumb().setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY));
         getWindow().setStatusBarColor(darkerColor);
         ListActivity.startPlayer();
 
@@ -120,7 +124,7 @@ public class PlayerActivity extends AppCompatActivity{
 
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(ListActivity.getPlayerCurrentPosition() < 5000) {
+                if(ListActivity.getPlayerCurrentPosition() < 2000) {
                     if(currentlyPlaying == 0)
                     {
                         ListActivity.playerSeekTo(0);
@@ -217,7 +221,7 @@ public class PlayerActivity extends AppCompatActivity{
         songTitleLabel.setText(songs.get(currentlyPlaying).getName());
         setTitle(songs.get(currentlyPlaying).getName());
         artistNameLabel.setText(songs.get(currentlyPlaying).getArtist());
-        artworkView.setImageResource((int)songs.get(currentlyPlaying).getAlbumArtwork());
+        artworkView.setImageResource((int) songs.get(currentlyPlaying).getAlbumArtwork());
         seekBar.setMax(ListActivity.getPlayerDuration());
         ActionBar bar = getSupportActionBar();
         int color = Color.rgb((int) (Math.random() * 256), (int) (Math.random() * 256), (int) (Math.random() * 256));
@@ -227,6 +231,8 @@ public class PlayerActivity extends AppCompatActivity{
         int darkerColor = Color.HSVToColor(hsv);
         ColorDrawable colorDrawable = new  ColorDrawable(color);
         bar.setBackgroundDrawable(colorDrawable);
+        seekBar.getProgressDrawable().setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY));
+        seekBar.getThumb().setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY));
         getWindow().setStatusBarColor(darkerColor);
         ListActivity.startPlayer();
     }
@@ -254,6 +260,8 @@ public class PlayerActivity extends AppCompatActivity{
         int darkerColor = Color.HSVToColor(hsv);
         ColorDrawable colorDrawable = new  ColorDrawable(color);
         bar.setBackgroundDrawable(colorDrawable);
+        seekBar.getProgressDrawable().setColorFilter(new PorterDuffColorFilter(darkerColor, PorterDuff.Mode.MULTIPLY));
+        seekBar.getThumb().setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY));
         getWindow().setStatusBarColor(darkerColor);
         ListActivity.startPlayer();
     }
