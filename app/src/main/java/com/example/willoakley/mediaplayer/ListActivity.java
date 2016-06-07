@@ -143,5 +143,9 @@ public class ListActivity extends AppCompatActivity {
         soundPlayer = MediaPlayer.create(c, (int)songs.get(i).getID());
 
     }
+
+    public static MediaPlayer getMediaPlayer(){
+        return soundPlayer;
+    };
 }
 

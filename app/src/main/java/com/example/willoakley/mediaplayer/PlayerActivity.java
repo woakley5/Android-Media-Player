@@ -1,43 +1,26 @@
 package com.example.willoakley.mediaplayer;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.ContentResolver;
-import android.content.ContentUris;
-import android.content.DialogInterface;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.ColorDrawable;
-import android.media.AudioManager;
-import android.media.Image;
 import android.media.MediaPlayer;
-import android.net.Uri;
-import android.provider.MediaStore;
+import android.media.audiofx.Visualizer;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Handler;
 
 public class PlayerActivity extends AppCompatActivity{
 
@@ -54,6 +37,10 @@ public class PlayerActivity extends AppCompatActivity{
     private int currentlyPlaying;
     private ImageView artworkView;
 
+    VisualizerView mVisualizerView;
+    private Visualizer mVisualizer;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +48,7 @@ public class PlayerActivity extends AppCompatActivity{
 
         songs = ListActivity.getSongList();
         currentlyPlaying = ListActivity.getClickedRow();
-
+        mVisualizerView = (VisualizerView) findViewById(R.id.myVisualizerView);
         playButton = (ImageButton)findViewById(R.id.playButton);
         backButton = (ImageButton)findViewById(R.id.backButton);
         nextButton = (ImageButton)findViewById(R.id.nextButton);
@@ -90,8 +77,16 @@ public class PlayerActivity extends AppCompatActivity{
         seekBar.getProgressDrawable().setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY));
         seekBar.getThumb().setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY));
         getWindow().setStatusBarColor(darkerColor);
-        ListActivity.startPlayer();
 
+        setupVisualizerFxAndUI();
+        mVisualizer.setEnabled(true);
+
+        ListActivity.getMediaPlayer().setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                mVisualizer.setEnabled(false);
+            }
+        });
+        ListActivity.startPlayer();
 
         if(currentlyPlaying == songs.size() -1)
         {
@@ -176,10 +171,20 @@ public class PlayerActivity extends AppCompatActivity{
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
 
             updater.cancel();
-            System.out.println("Ending Activity");
+
             finish();
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (isFinishing() && ListActivity.getMediaPlayer() != null) {
+            mVisualizer.release();
+            ListActivity.getMediaPlayer().release();
+            //ListActivity.getMediaPlayer() = null;
+        }
     }
 
     public void updateSeekBar() {
@@ -187,8 +192,7 @@ public class PlayerActivity extends AppCompatActivity{
             @Override
             public void run() {
                 int currentPosition = ListActivity.getPlayerCurrentPosition();
-                if(currentPosition >= ListActivity.getPlayerDuration() - 100)
-                {
+                if (currentPosition >= ListActivity.getPlayerDuration() - 100) {
                     nextSong();
                     System.out.println("Next Song Running");
                 }
@@ -234,6 +238,14 @@ public class PlayerActivity extends AppCompatActivity{
         seekBar.getProgressDrawable().setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY));
         seekBar.getThumb().setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY));
         getWindow().setStatusBarColor(darkerColor);
+        setupVisualizerFxAndUI();
+        mVisualizer.setEnabled(true);
+
+        ListActivity.getMediaPlayer().setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                mVisualizer.setEnabled(false);
+            }
+        });
         ListActivity.startPlayer();
     }
 
@@ -263,8 +275,35 @@ public class PlayerActivity extends AppCompatActivity{
         seekBar.getProgressDrawable().setColorFilter(new PorterDuffColorFilter(darkerColor, PorterDuff.Mode.MULTIPLY));
         seekBar.getThumb().setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY));
         getWindow().setStatusBarColor(darkerColor);
+        setupVisualizerFxAndUI();
+        mVisualizer.setEnabled(true);
+
+        ListActivity.getMediaPlayer().setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                mVisualizer.setEnabled(false);
+            }
+        });
         ListActivity.startPlayer();
     }
+
+    private void setupVisualizerFxAndUI() {
+
+        // Create the Visualizer object and attach it to our media player.
+        mVisualizer = new Visualizer(ListActivity.getMediaPlayer().getAudioSessionId());
+        mVisualizer.setCaptureSize(Visualizer.getCaptureSizeRange()[1]);
+        mVisualizer.setDataCaptureListener(
+                new Visualizer.OnDataCaptureListener() {
+                    public void onWaveFormDataCapture(Visualizer visualizer,
+                                                      byte[] bytes, int samplingRate) {
+                        mVisualizerView.updateVisualizer(bytes);
+                    }
+
+                    public void onFftDataCapture(Visualizer visualizer,
+                                                 byte[] bytes, int samplingRate) {
+                    }
+                }, Visualizer.getMaxCaptureRate() / 2, true, false);
+    }
+
 
 
 
