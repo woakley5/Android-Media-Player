@@ -77,8 +77,8 @@ public class PlayerActivity extends AppCompatActivity{
         seekBar.getProgressDrawable().setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY));
         seekBar.getThumb().setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY));
         getWindow().setStatusBarColor(darkerColor);
-
         setupVisualizerFxAndUI();
+        mVisualizerView.changeColor(darkerColor);
         mVisualizer.setEnabled(true);
 
         ListActivity.getMediaPlayer().setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -220,6 +220,7 @@ public class PlayerActivity extends AppCompatActivity{
             nextButton.setEnabled(false);
             nextButton.setVisibility(View.INVISIBLE);
         }
+        mVisualizer.release();
         ListActivity.resetPlayer();
         ListActivity.changeSong(currentlyPlaying, this);
         songTitleLabel.setText(songs.get(currentlyPlaying).getName());
@@ -239,6 +240,7 @@ public class PlayerActivity extends AppCompatActivity{
         seekBar.getThumb().setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY));
         getWindow().setStatusBarColor(darkerColor);
         setupVisualizerFxAndUI();
+        mVisualizerView.changeColor(darkerColor);
         mVisualizer.setEnabled(true);
 
         ListActivity.getMediaPlayer().setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -257,6 +259,7 @@ public class PlayerActivity extends AppCompatActivity{
             nextButton.setEnabled(true);
             nextButton.setVisibility(View.VISIBLE);
         }
+        mVisualizer.release();
         ListActivity.resetPlayer();
         ListActivity.changeSong(currentlyPlaying, this);
         songTitleLabel.setText(songs.get(currentlyPlaying).getName());
@@ -276,6 +279,7 @@ public class PlayerActivity extends AppCompatActivity{
         seekBar.getThumb().setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY));
         getWindow().setStatusBarColor(darkerColor);
         setupVisualizerFxAndUI();
+        mVisualizerView.changeColor(darkerColor);
         mVisualizer.setEnabled(true);
 
         ListActivity.getMediaPlayer().setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -301,7 +305,7 @@ public class PlayerActivity extends AppCompatActivity{
                     public void onFftDataCapture(Visualizer visualizer,
                                                  byte[] bytes, int samplingRate) {
                     }
-                }, Visualizer.getMaxCaptureRate() / 2, true, false);
+                }, Visualizer.getMaxCaptureRate() , true, false);
     }
 
 
